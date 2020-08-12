@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package ICD;
+
+// MARK: - Device messages
+
+// A message sent to the server to initiate contact discovery
+message Request {
+
+  // The identifier of the user requesting contact discovery
+  bytes user = 1;
+
+  // The authentication token of the user
+  bytes auth_token = 2;
+
+  // The identifiers of the contacts to check
+  repeated bytes identifiers = 3;
+}
+
+// The response code from the server
+enum Result {
+  // The contact discovery was successfull
+  SUCCESS = 0;
+  // The authentication token or user identifier is invalid
+  AUTHENTICATION_INVALID = 1;
+  // The rate limit has been exceeded
+  RATE_LIMIT_EXCEEDED = 2;
+
+  // The following are implementation errors
+
+  // The request did not contain body data
+  REQUEST_DATA_MISSING = 3;
+  // The request data is not a valid request
+  REQUEST_DATA_INVALID = 4;
+}
+
+// The response from the server to a request
+message Response {
+
+  // The resulting response from the server
+  Result result = 1;
+
+  // The (newly) registered users
+  repeated bytes added_users = 2;
+
+  // The unregistered users (will be empty for a full sync)
+  repeated bytes removed_users = 3;
+
+}
