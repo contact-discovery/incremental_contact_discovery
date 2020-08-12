@@ -98,4 +98,4 @@ python -m unittest testSystem.TestSystem.test_inc_sync_existing
 ````
 
 **Note** Some tests will create 20 million users, so run the tests only on suitable hardware,
-or remove some the test methods `test_create_millions_of_users` and `test_many_syncs` from `testSystem.py`
+or remove the test methods `test_create_millions_of_users` and `test_many_syncs` from `testSystem.py`
