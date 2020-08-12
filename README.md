@@ -4,13 +4,13 @@ This repository contains sample code to implement a rate-limiting scheme for con
 
 ## Motivation
 
-When services such as the Signal messenger implement contact discovery, their aim is to provide the users with the ability to easily discover which of their contacts are also registered with the service. At the same time, the service wants to prevent malicious users from readig out the entire list of registered users by enumerating over possible phone numbers.
+When services such as the Signal messenger implement contact discovery, their aim is to provide the users with the ability to easily discover which of their contacts are also registered with the service. At the same time, the service wants to prevent malicious users from reading out the entire list of registered users by enumerating over possible phone numbers.
 
 ## Main idea
 
-Current contact discovery schemes always match with the entire server database for every request, allowing an attacker to extract a lot of information very efficiently. Normal clients however, can remember the result of their last sync, and thus only need to regularly check for changes. By allowing clients to sync once with the full database, and perform subsequent syncs only with the set of users which registered with the service, the service can enforce stricter rate limits for the full set.
+Current contact discovery schemes always match with the entire server database for every request, allowing an attacker to extract a lot of information very efficiently. Normal clients however can remember the result of their last sync, and thus only need to regularly check for changes. By allowing clients to sync once with the full database, and perform subsequent syncs only with the set of users which registered with the service in a given teimframe, the service can enforce stricter rate limits for the full set.
 
-Thus, clients can perform two different syncs: A full sync, which returns all contacts currently registered with the server, and an incremental sync, which returns the added and removed users of the last 10 days. The former set has strict rate limits, i.e. 20000 contacts in 10 days, while the latter can be queried more often (20000 contacts per day.). Clients are expected to only perform a full sync after they have been offline for more than 10 days.
+Thus, clients can perform two different syncs: A full sync, which returns all contacts currently registered with the server, and an incremental sync, which returns the added and removed users of the last 10 days. The former set has strict rate limits, i.e. 20000 contacts in 10 days, while the latter can be queried more often (20000 contacts per day). Clients are expected to only perform a full sync after they have been offline for more than 10 days.
 
 ## Assumptions
 
